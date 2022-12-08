@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.59b759ce.css","mappings":"AAAA,MAAM,eAAe,CAErB,MACI,YACJ","sources":["index.css"],"sourcesContent":["ol li{list-style:none}\r\n\r\nul li{\r\n    display:flex;\r\n}"],"names":[],"sourceRoot":""}

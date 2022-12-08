@@ -1,52 +1,66 @@
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { useState } from "react";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 import Header from "./Header";
-import Main from './Main';
-import Footer from './Footer';
-import Delete from './Delete';
-import { useState } from 'react';
 const App = () => {
-  
-  const [n1,setn1]=useState([]);
+  const [val1, setval1] = useState("");
+  const [val2, setval2] = useState([]);
+  const Change = (e) => {
+    setval1(e.target.value);
+  };
+
+  const Result = () => {
+    setval2((oldarray) => {
+      return [...oldarray, val1];
+    }, setval1(""));
+    setval1("");
+  };
+
+  const deleteitem = (id) => {
+    setval2((oldarray) => {
+      return oldarray.filter((arr, index) => {
+        return index !== id;
+      });
+    });
+  };
 
 
-  const Result=(main1)=>{
-    setn1((old_2)=>{
-     return [...old_2,main1]
-    })
-   }
-  
-const OnDelete=(id)=>{
-    setn1((old_2)=>{
-        return old_2.filter((curr,index)=>{
-            return index !==id
-            })
-   })
- }
+  const date= new Date().toLocaleTimeString();
+  const [date1,setdate]=useState(date);
 
 
-    return (
+const Uptime=()=>{
+ const   namess=new Date().toLocaleTimeString();
+  setdate(namess)
+}
+
+setInterval(Uptime,1000)
+
+  return (
     <>
-      <Header />
-      <Main passnode={Result}/>
-<ul>
-    <li>
-        {
-            n1.map((mapwala,index)=>{
-                return <Delete
-                id={index}
-                key={index}
-                Firstinp1={mapwala.Firstinp1}
-                Secondinp2={mapwala.Secondinp2}
-                deleteitem={OnDelete}
+      <div className="container p-5">
+      <div className="bg bg-warning p-3 text-white"><h1>Date {date1}</h1></div>
+        <h1 className="display-1 p-2">TO DO LIST</h1>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Add a node"
+          onChange={Change}
+        />
+        <br />
+        <br />
+        <button onClick={Result} className="btn btn-success">
+          click me
+        </button>
+      </div>
 
-                />
-
-            })
-        }
-    </li>
-</ul>
-
-      <Footer/>
+      <ol>
+        {val2.map((res, index) => {
+          return (
+            <Header key={index} id={index} text={res} onselect={deleteitem} />
+          );
+        })}
+      </ol>
     </>
   );
 };
